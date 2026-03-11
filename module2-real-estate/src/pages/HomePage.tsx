@@ -34,10 +34,20 @@ import {
   OPERATION_TYPE_LABELS,
 } from '@/types/property';
 
+
+//los props que HomePage recibe desde App.tsx
+interface HomePageProps{
+  compareList: Property[];
+  onCompareAdd: (property:Property) => void;
+  onCompareRemove: (id:string) => void;
+}
+
+
+
 /**
  * Página principal con lista de propiedades y filtros.
  */
-export function HomePage(): React.ReactElement {
+export function HomePage({ compareList, onCompareAdd, onCompareRemove }: HomePageProps): React.ReactElement {
   // =========================================================================
   // ESTADO
   // =========================================================================
@@ -243,6 +253,10 @@ export function HomePage(): React.ReactElement {
               key={property.id}
               property={property}
               onDelete={handleDelete}
+              onCompareAdd={onCompareAdd}
+              onCompareRemove={onCompareRemove}
+              isSelectedForCompare={compareList.some(p => p.id === property.id)}
+              compareListFull={compareList.length >= 3}
             />
           ))}
         </div>
