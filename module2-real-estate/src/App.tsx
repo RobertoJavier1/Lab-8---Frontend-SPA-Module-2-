@@ -16,12 +16,11 @@ import { useState, useCallback } from 'react';
 import type { Property } from '@/types/property';
 import { Routes, Route, Link } from 'react-router-dom';
 import { Toaster } from '@/components/ui/sonner';
-import { Home, Building2 } from 'lucide-react';
+import { Home, Building2, GitCompareArrows } from 'lucide-react';
 import { HomePage } from '@/pages/HomePage';
 import { NewPropertyPage } from '@/pages/NewPropertyPage';
 import { PropertyDetailPage } from '@/pages/PropertyDetailPage';
 import { ComparePage } from '@/pages/ComparePage';
-import { GitCompareArrows } from 'lucide-react';
 /**
  * Componente principal de la aplicación.
  *
@@ -121,6 +120,18 @@ function App(): React.ReactElement {
                 />
               }
             />
+
+            {/* Página de comparación */}
+            <Route
+              path="/compare"
+              element={
+                <ComparePage
+                  compareList={compareList}
+                  onRemove={removeFromCompare}
+                />
+              }
+            />
+
             {/* Página para crear nueva propiedad */}
             <Route path="/new" element={<NewPropertyPage />} />
 
