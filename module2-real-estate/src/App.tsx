@@ -12,6 +12,8 @@
 // =============================================================================
 
 import type React from 'react';
+import { useState, useCallback } from 'react';
+import type { Property } from '@/types/property';
 import { Routes, Route, Link } from 'react-router-dom';
 import { Toaster } from '@/components/ui/sonner';
 import { Home, Building2 } from 'lucide-react';
@@ -28,6 +30,34 @@ import { PropertyDetailPage } from '@/pages/PropertyDetailPage';
  * - Footer con créditos
  */
 function App(): React.ReactElement {
+  const MAX_COMPARE = 3;
+  
+  //compareList guarda el arreglo de propiedades seleecionadas para comparar
+  const [compareList, setCompareList] = useState<Property[]>([]);
+
+  //agrega una propiedad al final de la lista
+  // verifica que no existan mas de 3 propiedades
+  //no duplica propiedades
+  //useCallback memoiza addToCompare para que no se recree en cada render
+  //[] dependencia vacia
+  const addToCompare = useCallback((property:Property)=>{
+      setCompareList(prev=>{
+        if (prev.length >= MAX_COMPARE){
+          return prev;
+        } 
+        if (prev.find(p => p.id === property.id)){
+          return prev;
+        } 
+        return [...prev, property];
+    });
+  }, []);
+
+  //elimina una propiedad de la lista de comparaciones
+  //construye un nuevo arreglo sin esa propiedad
+  const removeFromCompare = useCallback((id: string) => {
+    setCompareList(prev => prev.filter(p => p.id !== id));
+  }, []);
+
   return (
     <>
       {/* Toaster para notificaciones - fuera del layout para evitar problemas de z-index */}
