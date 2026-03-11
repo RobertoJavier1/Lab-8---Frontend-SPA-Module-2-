@@ -18,6 +18,8 @@ import { Button } from '@/components/ui/button';
 import type { Property } from '@/types/property';
 import { PROPERTY_TYPE_LABELS, OPERATION_TYPE_LABELS } from '@/types/property';
 import { formatPrice, formatArea, truncateText } from '@/lib/utils';
+import { CompareButton } from './CompareButton';
+import { fa } from 'zod/v4/locales';
 
 /**
  * Props del componente PropertyCard.
@@ -25,6 +27,11 @@ import { formatPrice, formatArea, truncateText } from '@/lib/utils';
 interface PropertyCardProps {
   property: Property;
   onDelete?: (id: string) => void;
+  //Props de comparacion son opcionales
+  onCompareAdd?: (property: Property) => void;
+  onCompareRemove?: (id: string) => void;
+  isSelectedForCompare?: boolean;
+  compareListFull?: boolean;
 }
 
 /**
@@ -40,7 +47,14 @@ interface PropertyCardProps {
  * @param property - Datos de la propiedad
  * @param onDelete - Callback opcional para eliminar
  */
-export function PropertyCard({ property, onDelete }: PropertyCardProps): React.ReactElement {
+export function PropertyCard({ 
+  property, 
+  onDelete,
+  onCompareAdd,
+  onCompareRemove,
+  isSelectedForCompare = false,
+  compareListFull = false,
+ }: PropertyCardProps): React.ReactElement {
   // Uso de Optional Chaining (?.) y Nullish Coalescing (??)
   // 1. property.images?.[0] -> Si images es null/undefined, devuelve undefined sin lanzar error
   // 2. ?? -> Si lo anterior es null/undefined, usa el placeholder
@@ -121,6 +135,17 @@ export function PropertyCard({ property, onDelete }: PropertyCardProps): React.R
         <Button asChild className="flex-1">
           <Link to={`/property/${property.id}`}>Ver detalles</Link>
         </Button>
+
+        {/* Botón comparar si se proporcionan callbacks */}
+        {onCompareAdd && onCompareRemove && (
+          <CompareButton
+            property={property}
+            isSelected={isSelectedForCompare}
+            onAdd={onCompareAdd}
+            onRemove={onCompareRemove}
+            disabled={compareListFull}
+          />
+        )}
 
         {/* Botón eliminar (si se proporciona callback) */}
         {onDelete && (
