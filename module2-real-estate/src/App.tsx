@@ -20,7 +20,8 @@ import { Home, Building2 } from 'lucide-react';
 import { HomePage } from '@/pages/HomePage';
 import { NewPropertyPage } from '@/pages/NewPropertyPage';
 import { PropertyDetailPage } from '@/pages/PropertyDetailPage';
-
+import { ComparePage } from '@/pages/ComparePage';
+import { GitCompareArrows } from 'lucide-react';
 /**
  * Componente principal de la aplicación.
  *
@@ -84,6 +85,19 @@ function App(): React.ReactElement {
                 <Home className="h-4 w-4" />
                 Inicio
               </Link>
+              {/* Link a la pagina comparar solo visible si hay propiedades seleccionadas */}
+              {compareList.length > 0 && (
+                <Link
+                  to="/compare"
+                  className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <GitCompareArrows className="h-4 w-4" />
+                  Comparar
+                  <span className="bg-primary text-primary-foreground text-xs rounded-full px-2 py-0.5">
+                    {compareList.length}
+                  </span>
+                </Link>
+              )}
             </nav>
           </div>
         </header>
@@ -96,9 +110,17 @@ function App(): React.ReactElement {
           =================================================================== */}
         <main className="flex-1">
           <Routes>
-            {/* Página principal - Lista de propiedades */}
-            <Route path="/" element={<HomePage />} />
-
+            {/* Página principal pasa las props de comparacion */}
+            <Route
+              path="/"
+              element={
+                <HomePage
+                  compareList={compareList}
+                  onCompareAdd={addToCompare}
+                  onCompareRemove={removeFromCompare}
+                />
+              }
+            />
             {/* Página para crear nueva propiedad */}
             <Route path="/new" element={<NewPropertyPage />} />
 

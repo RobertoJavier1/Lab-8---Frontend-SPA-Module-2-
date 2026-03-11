@@ -19,7 +19,7 @@ import type { Property } from '@/types/property';
 import { PROPERTY_TYPE_LABELS, OPERATION_TYPE_LABELS } from '@/types/property';
 import { formatPrice, formatArea, truncateText } from '@/lib/utils';
 import { CompareButton } from './CompareButton';
-import { fa } from 'zod/v4/locales';
+
 
 /**
  * Props del componente PropertyCard.
