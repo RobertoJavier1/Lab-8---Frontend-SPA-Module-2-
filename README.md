@@ -2,7 +2,7 @@
 
 Se implementó una función de comparación de propiedades que permite seleccionar hasta 3 propiedades y visualizarlas lado a lado en una tabla comparativa, resaltando los mejores valores en cada categoría.
 
-**Link video explicativo:**
+**Link video explicativo:** https://youtu.be/XWOEmrTkts0
 
 ---
 
